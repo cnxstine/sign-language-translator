@@ -1,0 +1,81 @@
+[Unit]
+Description=Smart Glove Sign Language Translator — Real-Time Inference Service
+Documentation=https://github.com/sign-language-translator
+After=bluetooth.target multi-user.target
+Wants=bluetooth.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/sign-language-translator/raspberry_pi
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/bin/python3 /home/pi/sign-language-translator/raspberry_pi/inference.py
+Restart=on-failure
+RestartSec=10
+
+# Environment
+Environment=PYTHONUNBUFFERED=1
+Environment=DISPLAY=
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=signlanguage
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/pi/sign-language-translator/logs
+
+# Resource limits
+MemoryMax=512M
+CPUQuota=80%
+
+[Install]
+WantedBy=multi-user.target
+
+# =============================================================================
+# Installation Instructions
+# =============================================================================
+#
+# 1. Copy this file to the systemd directory:
+#      sudo cp signlanguage.service /etc/systemd/system/
+#
+# 2. Reload systemd to recognize the new service:
+#      sudo systemctl daemon-reload
+#
+# 3. Enable the service to start on boot:
+#      sudo systemctl enable signlanguage.service
+#
+# 4. Start the service immediately:
+#      sudo systemctl start signlanguage.service
+#
+# 5. Check the service status:
+#      sudo systemctl status signlanguage.service
+#
+# 6. View logs:
+#      journalctl -u signlanguage.service -f
+#
+# 7. Stop the service:
+#      sudo systemctl stop signlanguage.service
+#
+# 8. Disable the service from starting on boot:
+#      sudo systemctl disable signlanguage.service
+#
+# =============================================================================
+# Notes
+# =============================================================================
+#
+# - The ExecStartPre sleep gives Bluetooth time to initialize after boot.
+# - Adjust WorkingDirectory and ExecStart paths if your project is installed
+#   in a different location.
+# - The service restarts automatically on failure with a 10-second delay.
+# - StartLimitBurst=5 prevents infinite restart loops (max 5 restarts in 5 min).
+# - Logs are written to the systemd journal, viewable with journalctl.
+# - PYTHONUNBUFFERED=1 ensures print() output appears in logs immediately.
+#
+# =============================================================================

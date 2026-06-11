@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+venv/
+env/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ML Models
+models/*.pkl
+models/*.joblib
+*.pkl
+*.joblib
+
+# Dataset (large files)
+dataset/raw/*.csv
+dataset/cleaned/*.csv
+!dataset/raw/.gitkeep
+!dataset/cleaned/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arduino / PlatformIO
+firmware/smart_glove/build/
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Environment
+.env
+*.log

@@ -1,0 +1,9 @@
+numpy
+pandas
+scikit-learn
+joblib
+pyserial
+adafruit-circuitpython-ssd1306
+Pillow
+matplotlib
+seaborn

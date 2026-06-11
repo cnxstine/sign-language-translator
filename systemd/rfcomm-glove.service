@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind RFCOMM for ESP32 Glove
+After=bluetooth.service
+Requires=bluetooth.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/rfcomm bind 0 ESP32_GLOVE
+ExecStop=/usr/bin/rfcomm release 0
+
+[Install]
+WantedBy=multi-user.target

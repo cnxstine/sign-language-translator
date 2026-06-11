@@ -1,0 +1,18 @@
+[Unit]
+Description=ESP32 Glove Gesture Translator
+After=rfcomm-glove.service
+Requires=rfcomm-glove.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi
+ExecStart=/usr/bin/python3 /home/pi/gesture_oled_autodiag.py
+Restart=always
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
